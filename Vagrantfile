@@ -171,6 +171,7 @@ Vagrant.configure(2) do |config|
     privileged: true,
     args: [ spark_username ],
     inline: <<-SHELL
+
       id "$1" >/dev/null 2>&1 || useradd -c 'User for Spark Notebook' -m -G vagrant "$1"
       su -l "$1" <<-EOF
 mkdir bin tmp .ssh 2>/dev/null
@@ -198,6 +199,7 @@ EOF
 #umount /vagrant
 #mount -t vboxsf -o uid=$(id -u $1),gid=$(id -g $1) vagrant /vagrant
 #SHELL
+
 
     # .........................................
     # Create the IPython Notebook profile ready to run Spark jobs
@@ -327,6 +329,7 @@ EOF
           echo "Installing nbconvert requisites"
           sudo yum install -y pandoc inkscape
           pip install pandoc
+          pip install avro
           DIR=$(kpsewhich -var-value TEXMFLOCAL)
           mkdir -p $DIR
           cd $DIR
