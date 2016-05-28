@@ -75,6 +75,7 @@ Vagrant.configure(2) do |config|
   end
 
 
+
   config.vm.define "vm-spark-nb64" do |vgrspark|
 
     #config.name = "vgr-pyspark"
@@ -103,6 +104,7 @@ Vagrant.configure(2) do |config|
       disabled: false
     #owner: spark_username
     #auto_mount: false
+
   
     # Customize the virtual machine: set hostname & allocated RAM
     vgrspark.vm.hostname = "vm-sparknotebook"
@@ -164,6 +166,17 @@ Vagrant.configure(2) do |config|
     # **********************************************************************
     # Provisioning: install Spark configuration files and startup scripts
 
+
+    #vgrspark.vm.provision "00.install",
+    #type: "shell",
+    #privileged: true,
+    #args: [spark_username ],
+    #inline: <<-SHELL
+    #SHELL
+
+
+
+
     # .........................................
     # Create the user to run Spark jobs (esp. notebook processes)
     vgrspark.vm.provision "01.nbuser",
@@ -199,6 +212,8 @@ EOF
 #umount /vagrant
 #mount -t vboxsf -o uid=$(id -u $1),gid=$(id -g $1) vagrant /vagrant
 #SHELL
+
+
 
 
     # .........................................
@@ -358,6 +373,7 @@ EOF
       keep_color: true,    
       inline: "/etc/init.d/spark-notebook start"
 
+  config.vm.provision :shell, path: "bootstrap.sh"
 
   end # config.vm.define
 
